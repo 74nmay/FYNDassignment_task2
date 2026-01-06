@@ -107,7 +107,7 @@ async def admin_dashboard(request: Request):
     Renders the admin dashboard with live analytics and review history.
     """
     # Fetch all reviews sorted by newest first
-    reviews = list(reviews_collection.find().sort("timestamp", -1))
+    reviews = list(reviews_collection.find().sort("_id", -1))
     
     # Calculate Analytics
     total_reviews = len(reviews)
