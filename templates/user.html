@@ -1,28 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Customer Feedback</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; padding-top: 50px; }
+        .card { border: none; border-radius: 15px; }
+        .btn-primary { background-color: #0d6efd; border: none; padding: 10px 20px; font-weight: bold; }
+        .form-select, .form-control { border-radius: 8px; padding: 12px; }
+    </style>
 </head>
-<body class="bg-light" style="padding-top: 50px;">
+<body>
     <div class="container" style="max-width: 600px;">
-        <div class="card shadow">
+        <div class="card shadow-lg">
             <div class="card-body p-5">
-                <h2 class="text-center mb-4">Leave a Review</h2>
+                <h2 class="text-center mb-4 fw-bold text-dark">We Value Your Feedback</h2>
+
+                {% if error %}
+                    <div class="alert alert-danger shadow-sm" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
 
                 {% if success %}
-                    <div class="alert alert-success">
-                        <h4 class="alert-heading">Review Submitted!</h4>
-                        <p><strong>Response from our Team:</strong></p>
-                        <p>{{ ai_message }}</p>
+                    <div class="alert alert-success shadow-sm">
+                        <h4 class="alert-heading mb-3">✅ Review Submitted!</h4>
+                        <p class="mb-1"><strong>Response from our Manager:</strong></p>
+                        <p class="fst-italic text-muted">"{{ ai_message }}"</p>
                         <hr>
-                        <a href="/" class="btn btn-success">Write Another Review</a>
+                        <div class="d-grid">
+                            <a href="/" class="btn btn-outline-success">Submit Another Review</a>
+                        </div>
                     </div>
                 {% else %}
                     <form action="/submit" method="post">
-                        <div class="mb-3">
-                            <label class="form-label">Rating</label>
-                            <select name="stars" class="form-select">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">How would you rate your experience?</label>
+                            <select name="stars" class="form-select form-select-lg">
                                 <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
                                 <option value="4">⭐⭐⭐⭐ Good</option>
                                 <option value="3">⭐⭐⭐ Average</option>
@@ -30,14 +46,21 @@
                                 <option value="1">⭐ Terrible</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Comments</label>
-                            <textarea name="review" class="form-control" rows="4" placeholder="How was your experience?" required></textarea>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Your Comments</label>
+                            <textarea name="review" class="form-control" rows="5" placeholder="Tell us what you liked or what we can improve..." required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm">Submit Review</button>
+                        </div>
                     </form>
                 {% endif %}
             </div>
+        </div>
+        <div class="text-center mt-3 text-muted">
+            <small>Powered by Groq AI & MongoDB</small>
         </div>
     </div>
 </body>
